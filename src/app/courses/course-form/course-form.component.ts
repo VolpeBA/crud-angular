@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CoursesService } from '../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-course-form',
@@ -17,7 +18,8 @@ export class CourseFormComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private service: CoursesService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private Location: Location
   ) {
     // this.form = this.formBuilder.group({
     //   name: [null],
@@ -34,12 +36,9 @@ export class CourseFormComponent implements OnInit {
   onSubmit() {
     this.service.save(this.form.value).subscribe(
       (data) => this.onSuccess(),
-      (error) => this.onError());
-    this.router.navigate(['../'], { relativeTo: this.route });
-  }
-
-  onCancel() {
-    this.router.navigate(['../'], { relativeTo: this.route });
+      (error) => this.onError()
+    );
+    this.onCancel();
   }
 
   private onSuccess() {
@@ -54,7 +53,7 @@ export class CourseFormComponent implements OnInit {
     });
   }
 
-  // onAdd(){
-  //   this.router.navigate(['new'], {relativeTo: this.route});
-  // }
+  onCancel() {
+    this.Location.back();
+  }
 }

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { Course } from '../models/course';
 import { delay, take, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class CoursesService {
 
   save(record: Course) { // record = interface do tipo course
     return this.httpClient.post<Course[]>(this.api, record).pipe(take(1));
+  }
+
+  delete(courseId: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.api}/courses/${courseId}`);
   }
 }
