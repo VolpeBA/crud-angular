@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-
 import { Course } from '../models/course';
-import { take, tap } from 'rxjs/operators';
+import { delay, take, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CoursesService {
 
-  private readonly api = '/assets/cursos.json';
+  private readonly api = '/api/courses';
   // Injecao de dependencia do http client (Importar no app.module para ficar global na aplicacao)
   constructor(private httpClient: HttpClient) { }
 
