@@ -1,0 +1,56 @@
+<!-- async pipe, to subscribe to mat-header-celle observable -->
+<mat-table [dataSource]="courses">
+  <!-- id Column -->
+  <ng-container matColumnDef="_id">
+    <mat-header-cell mat-header-cell *mamat-header-celleaderCellDef
+      >ID</mat-header-cell
+    >
+    <mat-cell mat-cell *matCellDef="let course">{{ course.id }}</mat-cell>
+  </ng-container>
+  <!-- name Column -->
+  <ng-container matColumnDef="name">
+    <mat-header-cell mat-header-cell *mamat-header-celleaderCellDef
+      >Nome</mat-header-cell
+    >
+    <mat-cell mat-cell *matCellDef="let course">{{ course.name }}</mat-cell>
+  </ng-container>
+  <!-- category Column -->
+  <ng-container matColumnDef="category">
+    <mat-header-cell mat-header-cell *mamat-header-celleaderCellDef
+      >Categoria</mat-header-cell
+    >
+    <mat-cell mat-cell *matCellDef="let course">
+      {{ course.category }}
+      <mat-icon
+        aria-hidden="false"
+        aria-label="Categoria do curso"
+        fontIcon="code"
+        >{{ course.category | category }}</mat-icon
+      >
+    </mat-cell>
+  </ng-container>
+
+  <!-- Actions Column -->
+  <ng-container matColumnDef="actions">
+    <!-- <mat-header-cell class="action-column-header">
+      <button mat-mini-fab color="accent" aria-label="Adicionar um curso">
+        <mat-icon (click)="onAdd()">add</mat-icon>
+      </button>
+    </mat-header-cell> -->
+
+    <mat-cell *matCellDef="let course" class="action-column">
+      <button mat-icon-fab color="primary" aria-label="Editar curso">
+        <mat-icon>edit</mat-icon>
+      </button>
+
+      <button mat-icon-fab color="warn" aria-label="Remover curso">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row
+    *mamat-header-celleaderRowDef="displayedColumns"
+  ></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+</mat-table>

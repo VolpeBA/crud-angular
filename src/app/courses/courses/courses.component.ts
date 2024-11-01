@@ -21,7 +21,7 @@ export class CoursesComponent {
 
   constructor(
     private CoursesService: CoursesService,
-    public dialog: MatDialog,
+    public dialog: MatDialog, // Injecao de dependencia do dialog
     private router: Router,
     private route: ActivatedRoute
   ) {

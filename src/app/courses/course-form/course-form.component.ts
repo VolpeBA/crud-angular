@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  NonNullableFormBuilder, Validators } from '@angular/forms';
 import { CoursesService } from '../services/courses.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
@@ -11,27 +10,23 @@ import { Location } from '@angular/common';
   styleUrls: ['./course-form.component.scss'],
 })
 export class CourseFormComponent implements OnInit {
-  form: UntypedFormGroup = this.formBuilder.group({});
+  // form: UntypedFormGroup = this.formBuilder.group({});
+  form = this.formBuilder.group({
+    name: ['', [Validators.required,Validators.maxLength(255)]],
+    category: [''],
+  });
 
   constructor(
-    private formBuilder: UntypedFormBuilder,
-    private router: Router,
-    private route: ActivatedRoute,
-    private service: CoursesService,
-    private snackBar: MatSnackBar,
-    private Location: Location
+    private formBuilder: NonNullableFormBuilder, // Injecao de dependencia do formBuilder
+    private service: CoursesService, // Injecao de dependencia do service
+    private snackBar: MatSnackBar, // Injecao de dependencia do snackBar
+    private Location: Location // Injecao de dependencia do Location (Para mudar de rota)
   ) {
-    // this.form = this.formBuilder.group({
-    //   name: [null],
-    //   category: [null],
-    // });
-    this.form = this.formBuilder.group({
-      name: [null, [Validators.required, Validators.maxLength(255)]],
-      category: [null],
-    });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.form.value.name = '';
+  }
 
   onSubmit() {
     this.service.save(this.form.value).subscribe(
@@ -39,6 +34,9 @@ export class CourseFormComponent implements OnInit {
       (error) => this.onError()
     );
     this.onCancel();
+    // setTimeout(() => {
+    //   window.location.reload();
+    // }, 1000);
   }
 
   private onSuccess() {

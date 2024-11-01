@@ -20,11 +20,13 @@ export class CoursesService {
     get<Course[]>(this.api).
     pipe(
       take(1), // fechar a conexao, pode-se usar take(1) ou first(), first() é um alias para take(1).
+      delay(2000), // delay de 2 segundos
       tap(courses => console.log(courses))
     );
   }
 
-  save(record: Course) { // record = interface do tipo course
+  // Posso aceitar o Partial, ou tambem posso retirar o ID do Course para resolver.
+  save(record: Partial<Course>) { // record = interface do tipo course
     return this.httpClient.post<Course[]>(this.api, record).pipe(take(1));
   }
 
